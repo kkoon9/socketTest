@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Socket Image Broadcasting Test</title>
+	</head>
+	<body>
+		<img id="img-stream2" src="" />
+		<div>
+			<button id="prev">이전</button>
+		</div>
+		<div>
+			<button id="next">다음</button>
+		</div>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			var socket = io.connect('http://localhost:4000');
+			var ctx = document.getElementById('img-stream2');
+			socket.on('image', (info) => {
+				if (info.image) {
+					var img = new Image();
+					img.src = 'data:image/jpeg;base64,' + info.buffer;
+					ctx.setAttribute('src', img.src);
+				}
+			});
+		</script>
+	</body>
+</html>
